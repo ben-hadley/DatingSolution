@@ -1,0 +1,295 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="DatingSiteModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="FRIENDS">
+          <Key>
+            <PropertyRef Name="Sender" />
+            <PropertyRef Name="Receiver" />
+          </Key>
+          <Property Name="Sender" Type="int" Nullable="false" />
+          <Property Name="Receiver" Type="int" Nullable="false" />
+          <Property Name="Accepted" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="USERS">
+          <Key>
+            <PropertyRef Name="AID" />
+          </Key>
+          <Property Name="AID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FName" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="LName" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Birthdate" Type="datetime" Nullable="false" />
+          <Property Name="Sex" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="ImagePath" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Searchable" Type="nchar" MaxLength="1" />
+          <Property Name="City" Type="nvarchar" MaxLength="50" />
+          <Property Name="InterestedIn" Type="nvarchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="WALLPOSTS">
+          <Key>
+            <PropertyRef Name="PID" />
+          </Key>
+          <Property Name="PID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Poster" Type="int" Nullable="false" />
+          <Property Name="Reciever" Type="int" Nullable="false" />
+          <Property Name="Time" Type="datetime" Nullable="false" />
+          <Property Name="Content" Type="varchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__FRIENDS__Receive__4BAC3F29">
+          <End Role="USERS" Type="Self.USERS" Multiplicity="1" />
+          <End Role="FRIENDS" Type="Self.FRIENDS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USERS">
+              <PropertyRef Name="AID" />
+            </Principal>
+            <Dependent Role="FRIENDS">
+              <PropertyRef Name="Receiver" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__FRIENDS__Sender__4AB81AF0">
+          <End Role="USERS" Type="Self.USERS" Multiplicity="1" />
+          <End Role="FRIENDS" Type="Self.FRIENDS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USERS">
+              <PropertyRef Name="AID" />
+            </Principal>
+            <Dependent Role="FRIENDS">
+              <PropertyRef Name="Sender" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__WALLPOSTS__Poste__2D27B809">
+          <End Role="USERS" Type="Self.USERS" Multiplicity="1" />
+          <End Role="WALLPOSTS" Type="Self.WALLPOSTS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USERS">
+              <PropertyRef Name="AID" />
+            </Principal>
+            <Dependent Role="WALLPOSTS">
+              <PropertyRef Name="Poster" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__WALLPOSTS__Recie__2E1BDC42">
+          <End Role="USERS" Type="Self.USERS" Multiplicity="1" />
+          <End Role="WALLPOSTS" Type="Self.WALLPOSTS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USERS">
+              <PropertyRef Name="AID" />
+            </Principal>
+            <Dependent Role="WALLPOSTS">
+              <PropertyRef Name="Reciever" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DatingSiteModelStoreContainer">
+          <EntitySet Name="FRIENDS" EntityType="Self.FRIENDS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="USERS" EntityType="Self.USERS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WALLPOSTS" EntityType="Self.WALLPOSTS" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__FRIENDS__Receive__4BAC3F29" Association="Self.FK__FRIENDS__Receive__4BAC3F29">
+            <End Role="USERS" EntitySet="USERS" />
+            <End Role="FRIENDS" EntitySet="FRIENDS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__FRIENDS__Sender__4AB81AF0" Association="Self.FK__FRIENDS__Sender__4AB81AF0">
+            <End Role="USERS" EntitySet="USERS" />
+            <End Role="FRIENDS" EntitySet="FRIENDS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__WALLPOSTS__Poste__2D27B809" Association="Self.FK__WALLPOSTS__Poste__2D27B809">
+            <End Role="USERS" EntitySet="USERS" />
+            <End Role="WALLPOSTS" EntitySet="WALLPOSTS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__WALLPOSTS__Recie__2E1BDC42" Association="Self.FK__WALLPOSTS__Recie__2E1BDC42">
+            <End Role="USERS" EntitySet="USERS" />
+            <End Role="WALLPOSTS" EntitySet="WALLPOSTS" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DatingSiteModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="FRIENDS">
+          <Key>
+            <PropertyRef Name="Sender" />
+            <PropertyRef Name="Receiver" />
+          </Key>
+          <Property Name="Sender" Type="Int32" Nullable="false" />
+          <Property Name="Receiver" Type="Int32" Nullable="false" />
+          <Property Name="Accepted" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="USERS" Relationship="Self.FK__FRIENDS__Receive__4BAC3F29" FromRole="FRIENDS" ToRole="USERS" />
+          <NavigationProperty Name="USERS1" Relationship="Self.FK__FRIENDS__Sender__4AB81AF0" FromRole="FRIENDS" ToRole="USERS" />
+        </EntityType>
+        <EntityType Name="USERS">
+          <Key>
+            <PropertyRef Name="AID" />
+          </Key>
+          <Property Name="AID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="LName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Birthdate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Sex" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ImagePath" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Searchable" Type="String" MaxLength="1" FixedLength="true" Unicode="true" />
+          <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="InterestedIn" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="FRIENDS" Relationship="Self.FK__FRIENDS__Receive__4BAC3F29" FromRole="USERS" ToRole="FRIENDS" />
+          <NavigationProperty Name="FRIENDS1" Relationship="Self.FK__FRIENDS__Sender__4AB81AF0" FromRole="USERS" ToRole="FRIENDS" />
+          <NavigationProperty Name="WALLPOSTS" Relationship="Self.FK__WALLPOSTS__Poste__2D27B809" FromRole="USERS" ToRole="WALLPOSTS" />
+          <NavigationProperty Name="WALLPOSTS1" Relationship="Self.FK__WALLPOSTS__Recie__2E1BDC42" FromRole="USERS" ToRole="WALLPOSTS" />
+        </EntityType>
+        <EntityType Name="WALLPOSTS">
+          <Key>
+            <PropertyRef Name="PID" />
+          </Key>
+          <Property Name="PID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Poster" Type="Int32" Nullable="false" />
+          <Property Name="Reciever" Type="Int32" Nullable="false" />
+          <Property Name="Time" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Content" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="USERS" Relationship="Self.FK__WALLPOSTS__Poste__2D27B809" FromRole="WALLPOSTS" ToRole="USERS" />
+          <NavigationProperty Name="USERS1" Relationship="Self.FK__WALLPOSTS__Recie__2E1BDC42" FromRole="WALLPOSTS" ToRole="USERS" />
+        </EntityType>
+        <Association Name="FK__FRIENDS__Receive__4BAC3F29">
+          <End Role="USERS" Type="Self.USERS" Multiplicity="1" />
+          <End Role="FRIENDS" Type="Self.FRIENDS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USERS">
+              <PropertyRef Name="AID" />
+            </Principal>
+            <Dependent Role="FRIENDS">
+              <PropertyRef Name="Receiver" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__FRIENDS__Sender__4AB81AF0">
+          <End Role="USERS" Type="Self.USERS" Multiplicity="1" />
+          <End Role="FRIENDS" Type="Self.FRIENDS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USERS">
+              <PropertyRef Name="AID" />
+            </Principal>
+            <Dependent Role="FRIENDS">
+              <PropertyRef Name="Sender" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__WALLPOSTS__Poste__2D27B809">
+          <End Role="USERS" Type="Self.USERS" Multiplicity="1" />
+          <End Role="WALLPOSTS" Type="Self.WALLPOSTS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USERS">
+              <PropertyRef Name="AID" />
+            </Principal>
+            <Dependent Role="WALLPOSTS">
+              <PropertyRef Name="Poster" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__WALLPOSTS__Recie__2E1BDC42">
+          <End Role="USERS" Type="Self.USERS" Multiplicity="1" />
+          <End Role="WALLPOSTS" Type="Self.WALLPOSTS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USERS">
+              <PropertyRef Name="AID" />
+            </Principal>
+            <Dependent Role="WALLPOSTS">
+              <PropertyRef Name="Reciever" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DatingSiteEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="FRIENDS" EntityType="Self.FRIENDS" />
+          <EntitySet Name="USERS" EntityType="Self.USERS" />
+          <EntitySet Name="WALLPOSTS" EntityType="Self.WALLPOSTS" />
+          <AssociationSet Name="FK__FRIENDS__Receive__4BAC3F29" Association="Self.FK__FRIENDS__Receive__4BAC3F29">
+            <End Role="USERS" EntitySet="USERS" />
+            <End Role="FRIENDS" EntitySet="FRIENDS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__FRIENDS__Sender__4AB81AF0" Association="Self.FK__FRIENDS__Sender__4AB81AF0">
+            <End Role="USERS" EntitySet="USERS" />
+            <End Role="FRIENDS" EntitySet="FRIENDS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__WALLPOSTS__Poste__2D27B809" Association="Self.FK__WALLPOSTS__Poste__2D27B809">
+            <End Role="USERS" EntitySet="USERS" />
+            <End Role="WALLPOSTS" EntitySet="WALLPOSTS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__WALLPOSTS__Recie__2E1BDC42" Association="Self.FK__WALLPOSTS__Recie__2E1BDC42">
+            <End Role="USERS" EntitySet="USERS" />
+            <End Role="WALLPOSTS" EntitySet="WALLPOSTS" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DatingSiteModelStoreContainer" CdmEntityContainer="DatingSiteEntities">
+          <EntitySetMapping Name="FRIENDS">
+            <EntityTypeMapping TypeName="DatingSiteModel.FRIENDS">
+              <MappingFragment StoreEntitySet="FRIENDS">
+                <ScalarProperty Name="Sender" ColumnName="Sender" />
+                <ScalarProperty Name="Receiver" ColumnName="Receiver" />
+                <ScalarProperty Name="Accepted" ColumnName="Accepted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="USERS">
+            <EntityTypeMapping TypeName="DatingSiteModel.USERS">
+              <MappingFragment StoreEntitySet="USERS">
+                <ScalarProperty Name="AID" ColumnName="AID" />
+                <ScalarProperty Name="FName" ColumnName="FName" />
+                <ScalarProperty Name="LName" ColumnName="LName" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Birthdate" ColumnName="Birthdate" />
+                <ScalarProperty Name="Sex" ColumnName="Sex" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="ImagePath" ColumnName="ImagePath" />
+                <ScalarProperty Name="Searchable" ColumnName="Searchable" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="InterestedIn" ColumnName="InterestedIn" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WALLPOSTS">
+            <EntityTypeMapping TypeName="DatingSiteModel.WALLPOSTS">
+              <MappingFragment StoreEntitySet="WALLPOSTS">
+                <ScalarProperty Name="PID" ColumnName="PID" />
+                <ScalarProperty Name="Poster" ColumnName="Poster" />
+                <ScalarProperty Name="Reciever" ColumnName="Reciever" />
+                <ScalarProperty Name="Time" ColumnName="Time" />
+                <ScalarProperty Name="Content" ColumnName="Content" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
